@@ -1,4 +1,6 @@
-use actix_web::{App, get, HttpResponse, HttpServer, Responder};
+mod models;
+
+use actix_web::{get, App, HttpResponse, HttpServer, Responder};
 
 #[get("/ping")]
 async fn ping() -> impl Responder {
