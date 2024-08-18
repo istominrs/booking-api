@@ -1,5 +1,5 @@
-use actix_web::{HttpResponse, post};
 use actix_web::web::{Data, Json};
+use actix_web::{post, HttpResponse};
 
 use crate::models::car_model::{Car, CarRequest};
 use crate::services::database::Database;
@@ -12,7 +12,8 @@ pub async fn create_car(database: Data<Database>, request: Json<CarRequest>) -> 
                 owner: request.owner.clone(),
                 brand: request.brand.clone(),
                 model: request.model.clone(),
-            }).expect("Error converting CarRequest to Car")
+            })
+            .expect("Error converting CarRequest to Car"),
         )
         .await
     {

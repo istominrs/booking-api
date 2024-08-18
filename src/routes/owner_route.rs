@@ -1,5 +1,5 @@
-use actix_web::{HttpResponse, post};
 use actix_web::web::{Data, Json};
+use actix_web::{post, HttpResponse};
 
 use crate::models::owner_model::{Owner, OwnerRequest};
 use crate::services::database::Database;
@@ -14,7 +14,8 @@ pub async fn create_owner(database: Data<Database>, request: Json<OwnerRequest>)
                 email: request.email.clone(),
                 phone: request.phone.clone(),
                 address: request.address.clone(),
-            }).expect("Error converting OwnerRequest to Owner")
+            })
+            .expect("Error converting OwnerRequest to Owner"),
         )
         .await
     {

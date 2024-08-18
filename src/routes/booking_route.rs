@@ -1,18 +1,22 @@
-use actix_web::{HttpResponse, post, put};
 use actix_web::web::{Data, Json, Path};
+use actix_web::{post, put, HttpResponse};
 
 use crate::models::booking_model::{Booking, BookingRequest};
 use crate::services::database::Database;
 
 #[post("/booking")]
-pub async fn create_booking(database: Data<Database>, request: Json<BookingRequest>) -> HttpResponse {
+pub async fn create_booking(
+    database: Data<Database>,
+    request: Json<BookingRequest>,
+) -> HttpResponse {
     match database
         .create_booking(
             Booking::try_from(BookingRequest {
                 owner: request.owner.clone(),
                 start_time: request.start_time.clone(),
                 end_time: request.end_time.clone(),
-            }).expect("Error converting BookingRequest to Booking")
+            })
+            .expect("Error converting BookingRequest to Booking"),
         )
         .await
     {
