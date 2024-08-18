@@ -113,11 +113,15 @@ impl Database {
     pub async fn get_users(&self) -> Result<Vec<User>, Error> {
         let mut results = self
             .user
-            .aggregate(vec![doc! {
-                "$match": {
-                    "active": true
-                }
-            }])
+            .aggregate(
+                vec![
+                    doc! {
+                        "$match": {
+                            "active": true
+                        }
+                    }
+                ]
+            )
             .await
             .ok()
             .expect("Error getting users");
