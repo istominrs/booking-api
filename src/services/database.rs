@@ -1,5 +1,6 @@
 use std::env;
 use std::str::FromStr;
+use dotenv::dotenv;
 use mongodb::{
     bson::{doc, extjson::de::Error, oid::ObjectId},
     Client,
@@ -18,6 +19,7 @@ pub struct Database {
 
 impl Database {
     pub async fn new() -> Self {
+        dotenv().ok();
         let uri = match env::var("MONGODB_DSN") {
             Ok(uri) => uri.to_string(),
             Err(_) => DEFAULT_MONGODB_DSN.to_string(),
